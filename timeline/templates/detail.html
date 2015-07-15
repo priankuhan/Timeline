@@ -1,0 +1,42 @@
+<html> <head>
+<title>{{ row.title }} | Timeline</title>
+</head>
+<body>
+<h1>CouchDB in Django: {{ row.title }}</h1>
+<a href="/">Return to index</a>
+
+<table>
+  <tr>
+    <td> Title </td>
+    <td id="title">{{ row.title }}</td>
+  </tr>
+  <tr>
+    <td> Type </td>
+    <td id="type">{{ row.type }}</td>
+  </tr>
+  <tr>
+    <td> Text </td>
+    <td id="text">{{ row.text }}</td>
+  </tr>
+</table>
+<hr>
+<form method="post" action=".">
+{% csrf_token %} 
+<table>
+  <tr>
+    <td> Title for new document </td>
+    <td><input type="text" name="title" value="{{ row.title }}"></td>
+  </tr>
+  <tr>
+    <td> Type </td>
+    <td><textarea name="type">{{ row.type }}</textarea></td>
+  <tr>
+  <tr>
+    <td> Text </td>
+    <td><textarea name="text">{{ row.text }}</textarea></td>
+  <tr>
+    <td><input type="submit"></td>
+  </tr>
+</table>
+</form>
+</body> </html>

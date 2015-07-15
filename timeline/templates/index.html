@@ -1,0 +1,72 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+{% load staticfiles %}
+<link href="{% static 'timeline/custom.css' %}" rel="stylesheet">
+<script type="text/javascript" src="{% static 'timeline/custom.js' %}"></script>
+
+<html> <head>
+<title>Timeline</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="page-header">
+        <a style="text-decoration : none" href="/"><h1 id="timeline" style="color:#2e6da4">Timeline</h1></a>
+    </div>
+    <form method="post" action="."> {% csrf_token %}    
+      <div class="row">
+        <div class="col-sm-10">
+          <input type="text" name="title" class="form-control" placeholder="Title for new document">
+        </div>
+        <div class="col-sm-2 text-left">
+          <input type="submit" class="btn btn-block btn-primary" value="Create">
+        </div>
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="btn-group btn-block" role="group" aria-label="...">
+          <button id='document' type="button" class="btn btn-primary" style="width:20%;" onclick="window.location.href='/document'">Documents</button>
+          <button id='music' type="button" class="btn btn-primary" style="width:20%;" onclick="window.location.href='/music'">Music</button>
+          <button id='picture' type="button" class="btn btn-primary" style="width:20%;" onclick="window.location.href='/picture'">Pictures</button>
+          <button id='video' type="button" class="btn btn-primary" style="width:20%;" onclick="window.location.href='/video'">Videos</button>
+          <button id='other' type="button" class="btn btn-primary" style="width:20%;" onclick="window.location.href='/other'">Other</button>
+        </div>
+      </div>
+    </div>
+    <div id="fade">
+      <ul class="timeline">
+        {% for row in rows %}
+          <li>
+            <div class="timeline-badge primary"><i class="fa fa-folder"></i></div>
+            <div class="timeline-panel">
+              <div class="timeline-heading">
+                <h4 class="timeline-title"><a id="title" href="/doc/{{ row.url }}/">{{ row.title }}</a></h4>
+                <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{row.date}}</small></p>
+              </div>
+              <div class="timeline-body">
+                <p>{{row.text}}</p>
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+</div>
+</body> </html>
+
+<script>
+  $( document ).ready(function() {
+    var type = "{{type}}"
+    var d = document.getElementById(type);
+    $('#'+type).click(function(){
+      window.location.href='/'
+    });
+    window.onload = d.className = d.className + " active";
+    console.log( "Done!" );
+    window.onload = document.getElementById("fade").delay(200).animate({"opacity": "1"}, 700);
+    
+  });
+</script>
