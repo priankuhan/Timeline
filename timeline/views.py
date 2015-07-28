@@ -7,6 +7,7 @@ from couchdbkit import *
 from datetime import datetime
 from operator import itemgetter
 import time
+import json
 
 class ItemForm(DocumentForm):    
      class Meta:
@@ -24,19 +25,19 @@ def index(request,type=""):
         else:
             if item['type'].lower() == type.lower():
                 titles.append(item)
-
-            
     titles = sorted(titles, key=itemgetter('time'), reverse=True)
+    
     if request.method == "POST":
         title = request.POST['title']
         dat = datetime.today
-        item = {'title': title,'text': "", 'type': "", 'time':int(time.time()), 'date': datetime.now().strftime('%B %-d, %Y - %-I:%M%P') }
+        item = {'title': title.replace("'", ''),'text': "", 'type': "", 'time':int(time.time()), 'date': datetime.now().strftime('%B %-d, %Y - %-I:%M%P') }
         items.save_doc(item)
         docid = item['_id']
         item['url'] = docid
         items[docid] = item
         return HttpResponseRedirect(u"/doc/%s/" % docid)
-    return render(request,'index.html',{'rows': titles,'type':type})
+    print json.dumps(titles)
+    return render(request,'index.html',{'rows': titles,'type':type,'jsonrows': json.dumps(titles)})
     
 def detail(request,id):
     items = SERVER['item']
@@ -45,8 +46,11 @@ def detail(request,id):
     except ResourceNotFound:
         raise Http404a
     if request.method =="POST":
-        item['title'] = request.POST['title']
-        item['text'] = request.POST['text']
-        item['type'] = request.POST['type']
+        item['title'] = request.POST['title'].replace("'", '')
+        item['text'] = request.POST['text'].replace("'", '')
+        item['type'] = request.POST['type'].replace("'", '')
+        item['time'] = int(time.time())
+        item['date'] = datetime.now().strftime('%B %-d, %Y - %-I:%M%P')
         items[id] = item
+        return HttpResponseRedirect(u"/")
     return render(request,'detail.html',{'row':item})

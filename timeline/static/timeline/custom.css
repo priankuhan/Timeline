@@ -154,3 +154,14 @@
 #fade {
     opacity: 0;
 }
+
+#viewpane {
+  position: fixed;
+  top: 35%;
+  bottom: 20px;
+  left:53%;
+  width:500px;
+  z-index: 1;
+}
+
+a { cursor: pointer; cursor: hand; }

@@ -1,42 +1,46 @@
-<html> <head>
-<title>{{ row.title }} | Timeline</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+{% load staticfiles %}
+<link href="{% static 'timeline/custom.css' %}" rel="stylesheet">
+<script type="text/javascript" src="{% static 'timeline/custom.js' %}"></script>
+
+<html> 
+<head>
+  <title>{{ row.title }} | Timeline</title>
 </head>
 <body>
-<h1>CouchDB in Django: {{ row.title }}</h1>
-<a href="/">Return to index</a>
+<div class="container">
+  <br>
+    <div class="row">
+      <div class="col-sm-2">
+        <a style="text-decoration : none" href="/"><h1 id="timeline" style="color:#2e6da4">Timeline</h1></a>
+      </div>
+    </div>
+    <hr style="margin-top: 0px">
+  <form method="post" action=".">
+  {% csrf_token %} 
+    <div class="row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-6">
+        <h4><strong>Title </strong></h4>
+        <input type="text" name="title" class="form-control" value="{{ row.title }}">
+        <h4><strong>Type </strong></h4>
+        <input type="text" name="type" class="form-control" value="{{ row.type }}">
+        <h4><strong>Text </strong></h4>
+        <input type="text" name="text" class="form-control" value="{{ row.text }}"><br>
+        <div class="col-sm-6">
+          <input type="submit" class="btn btn-primary btn-block">
+        </div>
+        <div class="col-sm-6">
+          <button id='Cancel' type="button" class="btn btn-danger btn-block" onclick="window.location.href='/'">Cancel</button>
+        </div>
+      </div>
+      <div class="col-sm-3"></div>
+    </div><br>
 
-<table>
-  <tr>
-    <td> Title </td>
-    <td id="title">{{ row.title }}</td>
-  </tr>
-  <tr>
-    <td> Type </td>
-    <td id="type">{{ row.type }}</td>
-  </tr>
-  <tr>
-    <td> Text </td>
-    <td id="text">{{ row.text }}</td>
-  </tr>
-</table>
-<hr>
-<form method="post" action=".">
-{% csrf_token %} 
-<table>
-  <tr>
-    <td> Title for new document </td>
-    <td><input type="text" name="title" value="{{ row.title }}"></td>
-  </tr>
-  <tr>
-    <td> Type </td>
-    <td><textarea name="type">{{ row.type }}</textarea></td>
-  <tr>
-  <tr>
-    <td> Text </td>
-    <td><textarea name="text">{{ row.text }}</textarea></td>
-  <tr>
-    <td><input type="submit"></td>
-  </tr>
-</table>
-</form>
+  </form>
+
+</div>
 </body> </html>

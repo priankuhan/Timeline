@@ -12,9 +12,13 @@
 <body>
 
 <div class="container">
-    <div class="page-header">
+    <br>
+    <div class="row">
+      <div class="col-sm-2">
         <a style="text-decoration : none" href="/"><h1 id="timeline" style="color:#2e6da4">Timeline</h1></a>
+      </div>
     </div>
+    <hr style="margin-top: 0px">
     <form method="post" action="."> {% csrf_token %}    
       <div class="row">
         <div class="col-sm-10">
@@ -36,14 +40,33 @@
         </div>
       </div>
     </div>
+    <br>
+    <div class="row">
+      
+      <div class="col-sm-6"></div>
+      
+      <div class="col-sm-6">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-1">
+          <div id="viewpane" class="panel panel-primary" style="border:0" >           
+              <div id="viewcontent" class="panel-body">
+              </div>
+          </div>  
+        </div>
+      </div>
+    </div>
     <div id="fade">
       <ul class="timeline">
         {% for row in rows %}
           <li>
             <div class="timeline-badge primary"><i class="fa fa-folder"></i></div>
-            <div class="timeline-panel">
+            <div class="timeline-panel" >
               <div class="timeline-heading">
-                <h4 class="timeline-title"><a id="title" href="/doc/{{ row.url }}/">{{ row.title }}</a></h4>
+                <h4 class="timeline-title">
+                  {% autoescape on %}<a id='title' onclick="document.getElementById('viewcontent').innerHTML='<h1>{{row.title}}</h1><p>{{row.text}}</p><a href=&quot;/doc/{{row.url}}/&quot;>Modify File</a>';document.getElementById('viewpane').style.border=1;">{% endautoescape %}
+                    {{ row.title }}
+                  </a>
+                </h4>
                 <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{row.date}}</small></p>
               </div>
               <div class="timeline-body">
@@ -59,7 +82,7 @@
 
 <script>
   $( document ).ready(function() {
-    var type = "{{type}}"
+    var type = "{{type}}";
     var d = document.getElementById(type);
     $('#'+type).click(function(){
       window.location.href='/'
@@ -67,6 +90,18 @@
     window.onload = d.className = d.className + " active";
     console.log( "Done!" );
     window.onload = document.getElementById("fade").delay(200).animate({"opacity": "1"}, 700);
+
     
+    var docs = jQuery.parseJSON("{{jsonrows}}");
+    var doc;
+    for (doc in docs) {
+      $('#'+doc.title).click(function(){
+        $('#viewcontent').text(doc.title);
+      });
+    }
   });
+  function viewcontent() {
+    document.getElementById("demo").style.color = "red";
+  }
+    
 </script>
