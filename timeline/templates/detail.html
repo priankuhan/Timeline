@@ -19,17 +19,47 @@
       </div>
     </div>
     <hr style="margin-top: 0px">
-  <form method="post" action=".">
+  <form method="post" enctype="multipart/form-data">
   {% csrf_token %} 
     <div class="row">
-      <div class="col-sm-3"></div>
-      <div class="col-sm-6">
-        <h4><strong>Title </strong></h4>
-        <input type="text" name="title" class="form-control" value="{{ row.title }}">
-        <h4><strong>Type </strong></h4>
-        <input type="text" name="type" class="form-control" value="{{ row.type }}">
-        <h4><strong>Text </strong></h4>
-        <input type="text" name="text" class="form-control" value="{{ row.text }}"><br>
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+        <div class="panel panel-primary" style="border:0"> 
+          <div class="panel-heading" style="font-size:20px">Details</div>
+          <div class="panel-body">
+            <h4><strong>Title </strong></h4>
+            <input type="text" name="title" class="form-control" value="{{ row.title }}">
+            <h4><strong>Type </strong></h4>
+            <select id="type" name="type" class="form-control">
+                <option value="Document" selected>Document</option>
+                <option value="Music">Music</option>
+                <option value="Picture">Picture</option>
+                <option value="Video">Video</option>
+                <option value="Other">Other</option>
+            </select>
+            <h4><strong>File </strong></h4>
+            <div2 id="Document">
+              Choose a PDF Document to upload
+              <input id="id_docfile" type="file" name="docfile" accept=".pdf">
+            </div2>
+            <div2 id="Music">
+              Choose an mp3 file to upload
+              <input id="id_docfile" type="file" name="docfile" accept="audio/mp3">
+            </div2>
+            <div2 id="Picture">
+              Choose an image file to upload
+              <input id="id_docfile" type="file" name="docfile" accept="image/*">
+            </div2>
+            <div2 id="Video">
+              Choose an mp4 file to upload
+              <input id="id_docfile" type="file" name="docfile" accept="video/mp4">
+            </div2>
+            <div2 id="Other">
+              Choose a file to upload
+              <input id="id_docfile" type="file" name="docfile" accept="*">
+            </div2>
+          </div>
+        </div> 
         <div class="col-sm-6">
           <input type="submit" class="btn btn-primary btn-block">
         </div>
@@ -44,3 +74,18 @@
 
 </div>
 </body> </html>
+
+<script>
+    
+  $(document).ready(function() { 
+    var type = "{{ row.type }}";
+    $("select#type").val(type);
+    $('div2:not(#'+ type + ')').hide();
+    $('#' + type).show();
+    $('select#type').change(function() {
+        var val = $(this).val();
+        $('div2:not(#'+ val + ')').hide();
+        $('#' + val).show();
+    });
+  });
+</script>
