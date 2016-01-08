@@ -15,7 +15,7 @@ class ItemForm(DocumentForm):
      class Meta:
          document = m.Item
 
-SERVER = Server('http://127.0.0.1:5984/')
+SERVER = Server('https://couchdb-04a019.smileupps.com')
 
 def index(request,type=""):
     titles = []
@@ -25,7 +25,7 @@ def index(request,type=""):
         item = items[doc["id"]]
         if item.get('title','') == "":
           items.delete_doc(item)
-        if type == "" and item.get('title','') != "": 
+        if type == "" : 
             titles.append(item)            
         else:
             if item['type'].lower() == type.lower() and item.get('title','') != "":
@@ -45,7 +45,7 @@ def index(request,type=""):
             stri = stri.replace('"', "&quot;")
             item['html'] = stri
         else:
-            item['html'] = "<embed src=&quot;/static/media/"+item['text']+"&quot; width=&quot;500&quot; height=&quot;500&quot; alt=&quot;pdf&quot; pluginspage=&quot;http://www.adobe.com/products/acrobat/readstep2.html&quot;>"
+            item['html'] = "<embed src=&quot;/static/media/"+item['text']+"&quot; width=&quot;500&quot; style=&quot;height:50vh&quot; alt=&quot;pdf&quot; pluginspage=&quot;http://www.adobe.com/products/acrobat/readstep2.html&quot;>"
         items.save_doc(item)
         
             

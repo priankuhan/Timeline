@@ -90,7 +90,7 @@
       var url = this.name
 
       $('#viewcontent').toggle().delay(400).queue(function(n) {
-              $('#viewcontent').html('<h1>'+title+'</h1>'+html+'<br><a href=doc/'+url+'/&quot;>Modify File</a>');
+              $('#viewcontent').html('<h1>'+title+'</h1>'+html+'<br><a href=/doc/'+url+'/&quot;>Modify File</a>');
               n();
       }).fadeIn();
     })

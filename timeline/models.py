@@ -3,7 +3,7 @@ from datetime import datetime
 from django.db import models
 
 class Uploader(models.Model):
-    docfile = models.FileField(upload_to='media')
+    docfile = models.FileField(upload_to='timeline/static/media')
 
 class Item(Document):
     author = StringProperty()

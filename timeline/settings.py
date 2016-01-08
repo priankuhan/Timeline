@@ -31,7 +31,8 @@ STATIC_URL = '/static/'
 # Application definition
 
 COUCHDB_DATABASES = (
-     ('timeline.item', 'http://127.0.0.1:5984/item'),
+    #  ('timeline.item', 'http://127.0.0.1:5984/item'),
+     ('timeline.item', 'couchdb-04a019.smileupps.com/item'),
 )
 
 INSTALLED_APPS = (
@@ -94,7 +95,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_ROOT = os.path.join("timeline/static")
+# MEDIA_ROOT = os.path.join("timeline/static")
 MEDIA_URL = '/media/'
 
 # Parse database configuration from $DATABASE_URL
@@ -107,7 +108,7 @@ MEDIA_URL = '/media/'
 # ALLOWED_HOSTS = ['*']
 
 # # Static asset configuration
-# STATIC_ROOT = 'static'
+STATIC_ROOT = os.path.join('timeline/static')
 # STATIC_URL = '/static/'
 
 # STATICFILES_DIRS = (
