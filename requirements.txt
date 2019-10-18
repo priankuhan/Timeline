@@ -10,7 +10,7 @@ django-static-jquery==2.1.4
 django-toolbelt==0.0.1
 gunicorn==19.3.0
 static3==0.6.1
-urllib3==1.7.1
+urllib3==1.24.2
 virtualenv==1.11.4
 virtualenv-clone==0.2.4
 virtualenvwrapper==4.1.1
